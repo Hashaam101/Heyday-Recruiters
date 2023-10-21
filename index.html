@@ -466,12 +466,12 @@
 
 
 <script>
-  function saveDataToFile(event) {
+  function saveDataLocally(event) {
     event.preventDefault(); // Prevent the form from submitting
 
-    // Get the current date and time
+    // Get the current date and time along with the time zone
     var currentDate = new Date();
-    var formattedDate = currentDate.toLocaleString();
+    var formattedDate = currentDate.toLocaleString('en-US', { timeZoneName: 'short' });
 
     // Get data from your form fields
     var user_type = document.getElementById('heading_usertype_2').textContent;
@@ -486,22 +486,37 @@
     var choices = document.querySelectorAll('input[name=choice]:checked');
     var note = document.getElementById('note').value;
 
-    // Create a Blob with the form data and date/time
-    var formData = `Date and Time: ${formattedDate}\nUser Type: ${user_type}\nFirst Name: ${fname}\nLast Name: ${lname}\nEmail: ${email}\nPhone: ${phone}\nCompany: ${company}\nPosition: ${select}\nJob Type (Employer): ${jobTypeEmployer}\nJob Type (Employee): ${jobTypeEmployee}\nEmployee Type: ${Array.from(choices, c => c.labels[0].innerText).join(', ')}\nNote: ${note}`;
+    // Create a string with the form data
+    var formData = `Date and Time [${formattedDate}]\nUser Type: ${user_type}\nFirst Name: ${fname}\nLast Name: ${lname}\nEmail: ${email}\nPhone: ${phone}\nCompany: ${company}\nPosition: ${select}\nJob Type (Employer): ${jobTypeEmployer}\nJob Type (Employee): ${jobTypeEmployee}\nEmployee Type: ${Array.from(choices, c => c.labels[0].innerText).join(', ')}\nNote: ${note}`;
+
+    // Create a Blob with the form data
     var blob = new Blob([formData], { type: 'text/plain' });
 
-    // Create a link to download the text file
-    var a = document.createElement('a');
-    a.href = window.URL.createObjectURL(blob);
-    a.download = 'Output/formData.txt';
+    // Create a FileWriter object
+    var fileWriter = new FileWriter();
 
-    // Simulate a click on the link to trigger the download
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    // Write the data to a local text file
+    fileWriter.write(blob, 'formData.txt');
+  }
+
+  // FileWriter object to handle local file writing
+  function FileWriter() {
+    this.write = function (blob, filename) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+
+      a.style.display = 'none';
+      document.body.appendChild(a);
+
+      // Simulate a click on the link to trigger the download
+      a.click();
+
+      document.body.removeChild(a);
+    };
   }
 </script>
+
 
 
   
