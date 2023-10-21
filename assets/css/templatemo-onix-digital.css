@@ -910,7 +910,7 @@ Banner Style
 }
 
 .main-banner .item h2 {
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 700;
   color: #2a2a2a;
   line-height: 72px;
@@ -1365,16 +1365,39 @@ Portfolio
 }
 
 /* FORM */
+em{
+  font-style: normal;
+  color: #03a4ed;
+}
+span{
+  color: #ff695f;
+  font-weight: 700;
+  opacity: 1;
+  text-transform: capitalize;
+}
+#heading_usertype{
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  font-size: 30px;
+  text-transform: capitalize;
+  color: #2a2a2a;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  line-height: 44px;
+}
 .myform{
   display: none;
 }
 
 .form1 {
+  padding-top: 50px;
+  padding-bottom: 50px;
   -webkit-font-smoothing: antialiased;
   background-color: #111111;
   font-family: "Titillium Web", sans-serif;
-  width: 75%;
-  height: 1200px;
+  --custom-height: fit-content;
+  height: "fit-content";
   display: flex;
   justify-content: center;
   align-items: center;
